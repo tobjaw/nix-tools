@@ -53,6 +53,7 @@
           devshell = devshell.flakeModule;
           default = defaultModule;
           go = importFlakeModule ./flake-modules/go.nix;
+          javascript = importFlakeModule ./flake-modules/javascript.nix;
         };
         perSystem =
           {
