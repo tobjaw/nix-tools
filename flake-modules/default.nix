@@ -19,7 +19,13 @@ in
           editorconfig-checker.enable = true;
           end-of-file-fixer.enable = true;
           nixfmt-rfc-style.enable = true;
-          markdownlint.enable = true;
+          markdownlint = {
+            enable = true;
+            settings.configuration = {
+              # MD013/line-length : Line length : https://github.com/DavidAnson/markdownlint/blob/v0.39.0/doc/md013.md
+              MD013 = false;
+            };
+          };
           prettier = {
             enable = true;
             excludes = [ "flake.lock" ];
