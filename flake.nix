@@ -53,6 +53,7 @@
           default = defaultModule;
           go = importFlakeModule ./flake-modules/go.nix;
           javascript = importFlakeModule ./flake-modules/javascript.nix;
+          python = importFlakeModule ./flake-modules/python.nix;
         };
         perSystem =
           {
