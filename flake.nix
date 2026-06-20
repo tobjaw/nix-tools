@@ -11,8 +11,8 @@
       url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    devshell = {
-      url = "github:numtide/devshell";
+    taskfile-parts = {
+      url = "github:tobjaw/taskfile-parts";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -21,7 +21,7 @@
     inputs@{
       flake-parts,
       git-hooks,
-      devshell,
+      taskfile-parts,
       ...
     }:
     flake-parts.lib.mkFlake { inherit inputs; } (
@@ -41,7 +41,7 @@
         imports = [
           defaultModule
           git-hooks.flakeModule
-          devshell.flakeModule
+          taskfile-parts.flakeModules.default
         ];
         systems = [
           "x86_64-linux"
@@ -50,7 +50,6 @@
         ];
         flake.flakeModules = {
           git-hooks = git-hooks.flakeModule;
-          devshell = devshell.flakeModule;
           default = defaultModule;
           go = importFlakeModule ./flake-modules/go.nix;
           javascript = importFlakeModule ./flake-modules/javascript.nix;
@@ -61,17 +60,10 @@
             ...
           }:
           {
-            devshells.default = {
-              commands = [
-                {
-                  name = "lint";
-                  help = "lint project";
-                  command = "nix flake check";
-                }
-              ];
-              devshell.startup.pre-commit.text = ''
-                ${config.pre-commit.installationScript}
-              '';
+            taskfile = {
+              enable = true;
+              path = ./Taskfile.yml;
+              shell.shellHook = config.pre-commit.installationScript;
             };
           };
       }
