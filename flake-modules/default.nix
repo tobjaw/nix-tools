@@ -18,7 +18,7 @@ in
           deadnix.enable = true;
           editorconfig-checker.enable = true;
           end-of-file-fixer.enable = true;
-          nixfmt-rfc-style.enable = true;
+          nixfmt.enable = true;
           markdownlint = {
             enable = true;
             settings.configuration = {
